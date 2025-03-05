@@ -22,15 +22,22 @@ def handle_events():
 def draw_line(screen, color, start_pos, end_pos, thickness):
     pygame.draw.line(screen, color, start_pos, end_pos, thickness)
 
-def draw_rect(screen, rect, color, thickness):
+def draw_rect(screen, rect, color, thickness=0):
     pygame.draw.rect(screen, color, rect, thickness)
 
-def draw_circle(screen, center, radius, color, thickness):
+def draw_circle(screen, center, radius, color, thickness=0):
     pygame.draw.circle(screen, color, center, radius, thickness)
 
 def draw_text(screen, text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
+
+def draw_oval(screen, oval, color, thickness=0):
+    pygame.draw.ellipse(screen, color, oval, thickness)
+
+def draw_tri(screen, color, tri, width=0):
+    pygame.draw.polygon(screen, color, tri, width)
+
 
 
 
@@ -38,17 +45,41 @@ def main():
     screen = init_game()
     clock = pygame.time.Clock()
     running = True
-
     text_font = pygame.font.SysFont('Arial', 30)
+    body = [250, 200, 200, 150]
+    head = [200, 200, 80, 60]
+    ear1 = [[210, 200], [215, 180], [230, 200]]
+    ear2 = [[250, 200], [255, 180], [270, 200]]
+    tail_tuff = [575, 265, 50, 25]
+    bubble = [100, 75, 230, 110]
+    bubble_ar = [[165, 175], [175, 175], [200, 200]]
     while running:
         running = handle_events()
-        screen.fill(config.COLOR_WHITE)
-
-        draw_text(screen, 'Hello world', text_font, config.COLOR_BLACK, 220, 150)
+        screen.fill(config.COLOR_DARKGRAY)
+        
 
         # Calling a grid (Comment this out after you are done coding)
         grid(screen)
-        
+        # Thor, my cat:
+        draw_oval(screen, body, config.COLOR_BLACK)
+        draw_rect(screen, head, config.COLOR_BLACK)
+        draw_circle(screen, [220, 220], 8, config.COLOR_WHITE)
+        draw_circle(screen, [250, 220], 8, config.COLOR_WHITE)
+        draw_line(screen, config.COLOR_BLACK, [300, 325], [300, 385], 6)
+        draw_line(screen, config.COLOR_BLACK, [320, 325], [320, 385], 6)
+        draw_line(screen, config.COLOR_BLACK, [360, 325], [360, 385], 6)
+        draw_line(screen, config.COLOR_BLACK, [380, 325], [380, 385], 6)
+        draw_tri(screen, config.COLOR_BLACK, ear1)
+        draw_tri(screen, config.COLOR_BLACK, ear2)
+        draw_line(screen, config.COLOR_BLACK, [450, 275], [575, 275], 8)
+        draw_oval(screen, tail_tuff, config.COLOR_BLACK)
+        draw_circle(screen, [220, 220], 2, config.COLOR_BLACK)
+        draw_circle(screen, [250, 220], 2, config.COLOR_BLACK)
+        draw_oval(screen, bubble, config.COLOR_WHITESMOKE)
+        draw_text(screen, 'Meow...', text_font, config.COLOR_BLACK, 130, 100)
+        draw_text(screen, '(He wants kibble)', text_font, config.COLOR_BLACK, 120, 120)
+        draw_tri(screen, config.COLOR_WHITESMOKE, bubble_ar)
+
         pygame.display.flip()
 
         clock.tick(config.FPS)
